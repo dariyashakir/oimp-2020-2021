@@ -63,9 +63,22 @@ std::vector<std::string> letters{
 
 Задача E.
 
+В условии задачи явно запрещен pow!
+
 Если используете double, то не надо кастовать к float. static_cast<float> плохо, static_cast<double> хорошо.
 
-В условии задачи явно запрещен pow!
+static_cast<double>(1) -> 1.0
+
+Пустой if --- плохо:
+if (ans.back() == '1') {
+    continue;
+} else {
+    ans.push_back('1');
+}
+хорошо:
+if (ans.back() != '1') {
+    ans.push_back('1');
+}
 
 Следите, чтобы отступы не съезжали.
 
@@ -91,6 +104,8 @@ pow -> std::pow
 Что ж, давайте воспользуемся. Не забываем про std::
 #include <ctype.h> -> #include <cctype>
 
+exit(0); -> return 0;
+
 Мы не пишем пустой if:
 if (...) {
     пусто
@@ -107,6 +122,10 @@ a = 0, b = 0, c = 0, d = 0;  --- непонятно что это и зачем 
 
 Строка по дефолту инициализируется пустой. Да, в плюсах куча всего.
 std::string password = ""; -> std::string password;
+
+static_cast<bool>(std::islower(ch)) -> std::islower(ch)
+Функция и так возвращает bool, не надо кастовать.
+Тем более внутри if и while static_cast<bool> происходит автоматически.
 
 Задача H.
 
