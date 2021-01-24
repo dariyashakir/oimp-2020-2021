@@ -1,4 +1,5 @@
 #include "typical_mistakes.txt"
+#include "cat the reviewer.jpg"
 
 Читайте весь файл (и предыдущий).
 
@@ -102,6 +103,15 @@
 
 ### Задача L.
 
+Пару можно (нужно) сконструировать сразу в return;
+То есть, не
+      std::pair<size_t, size_t> answer = {start, length};
+      return answer;
+А так
+    return std::make_pair(start, length);
+
+Обратите внимание на то, что можно не передавать по const ссылке типы данных размером менее 8 байт.
+Проще скопировать их в функцию, т.е передать аргумент по значению.
 
 ### Задача М.
 
