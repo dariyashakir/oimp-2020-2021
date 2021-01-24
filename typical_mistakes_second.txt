@@ -5,18 +5,18 @@
 ### Задача А.
 
 Можно заменить
-if (условие) {
-    return true;
-} else {
-    return false;
-}
+    if (condition) {
+        return true;
+    } else {
+        return false;
+    }
 на
     return condition;
 
 Лучше else if вместо нескольких if.
 
 Вместо
-    getline (cin, tmp,'');
+    getline (cin, tmp, ' ');
     x = stoi(tmp);
 Используйте
     std::cin >> x;
