@@ -60,7 +60,7 @@ std::string CommonPrefix(const std::vector<std::string>& words) {
 #include <vector>
 
 std::string CommonPrefix2(const std::vector<std::string>& words) {
-	if (words.empty()) {
+    if (words.empty()) {
     	return "";
     }
 
