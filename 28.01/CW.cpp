@@ -56,6 +56,28 @@ std::string CommonPrefix(const std::vector<std::string>& words) {
 }
 
 
+#include <string>
+#include <vector>
+
+std::string CommonPrefix2(const std::vector<std::string>& words) {
+	if (words.empty()) {
+    	return "";
+    }
+
+    int prefix_len = -1;
+    bool stopped = false;
+    while (!stopped) {
+        ++prefix_len;
+        for (const auto& word : words) {
+            if (static_cast<size_t>(prefix_len) >= word.size() ||
+                    word[prefix_len] != words[0][prefix_len]) {
+                stopped = true;
+                break;
+            }
+        }
+    }
+    return words.front().substr(0, prefix_len);
+}
 
 
 
