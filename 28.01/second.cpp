@@ -41,7 +41,7 @@ int main() {
         std::cin >> name >> surname >> score;
         Student student(name, surname);
 
-        scores.try_emplace(student).first->second.push_back(score);
+        scores.try_emplace(student).first->second.push_back(score);  // or simply scores[student].push_back(score);
     }
 
     for (const auto& [student, score_arr] : scores) {
