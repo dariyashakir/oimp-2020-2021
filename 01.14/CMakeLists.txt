@@ -1,4 +1,4 @@
-set(NAME 14_01)
+set(NAME 01_14)
 
 project(${NAME})
 
