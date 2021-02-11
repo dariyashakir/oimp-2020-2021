@@ -7,7 +7,7 @@
 
 struct Date {
     bool operator<(const Date& rhs) const {
-        return std::tie(day, month, year) < std::tie(rhs.day, rhs.month, rhs.year);
+        return std::tie(year, month, day) < std::tie(rhs.year, rhs.month, rhs.day);
     }
 
     int day = 0;
