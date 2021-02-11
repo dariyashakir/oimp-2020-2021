@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cassert>
 #include <chrono>
 #include <iostream>
@@ -34,15 +35,16 @@ Iterator Find(Iterator first, Iterator last, T value) {
 class Timer {
     using Clock = std::chrono::high_resolution_clock;
 public:
-    Timer(std::string message)
+    explicit Timer(std::string message)
         : message_(std::move(message))
-        , start_(Clock::now())
-    {
+        , start_(Clock::now()) {
     }
+
 
     ~Timer() {
         auto end = Clock::now();
-        std::cout << message_ << ' ' << std::chrono::duration_cast<std::chrono::milliseconds>(end - start_).count() << "ms\n";
+        std::cout << message_ << ' ' << std::chrono::duration_cast<std::chrono::milliseconds>(
+            end - start_).count() << "ms\n";
     }
 
 private:
@@ -64,109 +66,116 @@ Iterator Unique(Iterator first, Iterator last) {
             *(++unique) = std::move(*first);
         }
     }
-
     return ++unique;
 }
 
 int main() {
     {
         std::vector<int> v = {1, 1, 2, 2, 3};
-        auto cpy = v;
+        std::set<int> s(v.begin(), v.end());
 
         auto end = Unique(v.begin(), v.end());
-        auto first = v.begin();
 
-        auto end_cpy = std::unique(cpy.begin(), cpy.end());
-        auto first_cpy = cpy.begin();
-
-        while (first < end && first_cpy < end_cpy) {
-            assert(*first == *first_cpy);
-            ++first;
-            ++first_cpy;
+        assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
         }
-        assert(first == end);
-        assert(first_cpy == end_cpy);
-    }
-    {
-        std::vector<int> v = {1, 2, 2, 2, 3};
-        auto cpy = v;
-        auto end = Unique(v.begin(), v.end());
-        auto end_cpy = std::unique(cpy.begin(), cpy.end());
-        auto first = v.begin();
-        auto first_cpy = cpy.begin();
-
-        while (first < end && first_cpy < end_cpy) {
-            assert(*first == *first_cpy);
-            ++first;
-            ++first_cpy;
-        }
-        assert(first == end);
-        assert(first_cpy == end_cpy);
+        assert(s.empty());
     }
     {
         std::vector<int> v = {};
-        auto cpy = v;
-        auto end = Unique(v.begin(), v.end());
-        auto end_cpy = std::unique(cpy.begin(), cpy.end());
-        auto first = v.begin();
-        auto first_cpy = cpy.begin();
+        std::set<int> s(v.begin(), v.end());
 
-        while (first < end && first_cpy < end_cpy) {
-            assert(*first == *first_cpy);
-            ++first;
-            ++first_cpy;
-        }
-        assert(first == end);
-        assert(first_cpy == end_cpy);
-    }
-    {
-        std::vector<int> v = {1, 1, 1};
-        auto cpy = v;
         auto end = Unique(v.begin(), v.end());
-        auto end_cpy = std::unique(cpy.begin(), cpy.end());
-        auto first = v.begin();
-        auto first_cpy = cpy.begin();
 
-        while (first < end && first_cpy < end_cpy) {
-            assert(*first == *first_cpy);
-            ++first;
-            ++first_cpy;
+                assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
         }
-        assert(first == end);
-        assert(first_cpy == end_cpy);
+        assert(s.empty());
     }
     {
         std::vector<int> v = {1};
-        auto cpy = v;
-        auto end = Unique(v.begin(), v.end());
-        auto end_cpy = std::unique(cpy.begin(), cpy.end());
-        auto first = v.begin();
-        auto first_cpy = cpy.begin();
+        std::set<int> s(v.begin(), v.end());
 
-        while (first < end && first_cpy < end_cpy) {
-            assert(*first == *first_cpy);
-            ++first;
-            ++first_cpy;
+        auto end = Unique(v.begin(), v.end());
+
+                assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
         }
-        assert(first == end);
-        assert(first_cpy == end_cpy);
+        assert(s.empty());
+    }
+    {
+        std::vector<int> v = {1, 1};
+        std::set<int> s(v.begin(), v.end());
+
+        auto end = Unique(v.begin(), v.end());
+
+                assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
+        }
+        assert(s.empty());
+    }
+    {
+        std::vector<int> v = {1, 2, 3};
+        std::set<int> s(v.begin(), v.end());
+
+        auto end = Unique(v.begin(), v.end());
+
+        assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
+        }
+        assert(s.empty());
+    }
+    {
+        std::vector<int> v = {1, 2, 3, 3};
+        std::set<int> s(v.begin(), v.end());
+
+        auto end = Unique(v.begin(), v.end());
+
+        assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
+        }
+        assert(s.empty());
+    }
+    {
+        std::vector<int> v = {1, 1, 2, 2, 3, 40};
+        std::set<int> s(v.begin(), v.end());
+
+        auto end = Unique(v.begin(), v.end());
+
+                assert(std::distance(v.begin(), end) == s.size());
+        for (auto it = v.begin(); it < end; ++it) {
+            s.erase(*it);
+        }
+        assert(s.empty());
     }
 
 
 
 
+//    std::cout << Min(1'000'000'001, 1'000'000'002) << '\n';
+//    std::cout << Min(10.5f, 20.5f) << '\n';
+//    std::cout << Min(10.5f, 20) << '\n';
+//    std::cout << Min(10.5, 20.5) << '\n';
 
 
 
 
-
-
-
-    Min(static_cast<double>(2000), 2000.0);
 
     std::vector<int> vector;
     auto it = std::back_inserter(vector);
-    *it = 10;
+    std::set<int> s;
+    auto i = std::inserter(s, s.end());
+    for (int el : s) {
+        std::cout << el << ' ';
+    }
+    std::cout << " set\n";
+    ++it = 10;
     std::cout << vector.back() << '\n';
 
     std::cout << "Find has found? " << (Find(vector.begin(), vector.end(), 10) != vector.end()) << '\n';
@@ -225,6 +234,12 @@ int main() {
 
 
 
+    std::multimap<int, int> m;
+    m.emplace(1, 2);
+    m.emplace(1, 3);
+    for (auto [begin, end] = m.equal_range(1); begin != end; ++begin) {
+        std::cout << begin->second << '\n';
+    }
 
 
     std::vector<int> stack;
@@ -235,7 +250,7 @@ int main() {
     std::cout << stack.front() << '\n';
 
 
-    std::priority_queue<int, std::deque<int>, std::greater<>> priority_queue;
+    std::priority_queue<int, std::vector<int>, std::greater<>> priority_queue;
     priority_queue.push(10);
     priority_queue.push(20);
     priority_queue.push(5);
