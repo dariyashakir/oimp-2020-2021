@@ -69,7 +69,44 @@ Iterator Unique(Iterator first, Iterator last) {
     return ++unique;
 }
 
+int& LeftPP(int& x) {
+    ++x;
+    return x;
+}
+
+int RightPP(int& x) {
+    auto y = x;
+    ++x;
+    return y;
+}
+
+template <class Container>
+void Print(const Container& container) {
+    for (auto element : container) {
+        std::cout << element << ' ';
+    }
+    std::cout << '\n';
+}
+
 int main() {
+    std::vector v = {1, 2, 3, 4, 5, 6};
+    std::unordered_set<int> set;
+    for (int i = 0; i < 10; ++i) {
+        set.insert(i);
+    }
+
+    std::string str = "aabbaa";
+    std::replace(str.begin(), str.end(), 'a', 'h');
+    str.replace(1, 3, "ccc");
+    Print(str);
+
+    Print(set);
+    std::erase_if(set, [](const auto& elem) {
+        return elem % 2 == 0;
+    });
+    Print(set);
+
+
     {
         std::vector<int> v = {1, 1, 2, 2, 3};
         std::set<int> s(v.begin(), v.end());
